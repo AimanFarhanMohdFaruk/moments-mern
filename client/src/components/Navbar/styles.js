@@ -14,6 +14,7 @@ export default makeStyles((theme) => ({
     heading: {
         color: 'rgba(0,183,255,1)',
         fontSize: '36px',
+        fontWeight: '700'
     },
     image: {
         marginLeft: '15px',
