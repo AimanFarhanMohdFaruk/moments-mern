@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import postRoutes from "./routes/posts.js";
+import userRoutes from "./routes/users.js"
 
 const app = express()
 
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded( {limit:"30mb", extended: true} ));
 app.use(cors()) //must be above the imports for routes
 
 app.use('/posts', postRoutes)
+app.use("/users", userRoutes)
 
 //test server deployment on heroku
 app.get("/", (req,res) => {
