@@ -2,6 +2,7 @@ import * as api from "../api"
 import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes"
 
 // Actions Creators - function that returns actions
+// the bracket before async refers the data that you pass on your frontend to the API on your backend
 
 export const getPosts = () => async (dispatch) => {
     try {

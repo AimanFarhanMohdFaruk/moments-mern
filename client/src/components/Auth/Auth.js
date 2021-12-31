@@ -3,10 +3,14 @@ import { Avatar, Paper, Typography, Button, Grid, Container, TextField } from "@
 import { GoogleLogin } from 'react-google-login'
 import {useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
+import { signIn, signUp } from "../../actions/auth.js"
+
 import useStyles from "./styles"
 import LockOutlined from '@material-ui/icons/LockOutlined';
 import Input from "./Input";
 import Icon from "./Icon"
+
+const initialState = {firstName: "", lastName: "", email: "", password: "", confirmPassword: ""}
 
 const Auth = () => {
 
@@ -17,14 +21,21 @@ const Auth = () => {
     const [ isSignUp , setIsSignUp ] = useState(true)
     const [ showPassword, setShowPassword] = useState(false)
 
+    const [ formData, setFormData ] = useState(initialState)
+
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (isSignUp) {
+            dispatch(signUp, (formData, navigate))
+        } else {
+            dispatch(signIn, (formData, navigate))
+        }
     };
 
-    const handleChange= () => {
-
+    const handleChange= (e) => {
+        setFormData({...formData, [e.target.name]: e.target.value})
     };
 
 
@@ -50,6 +61,9 @@ const Auth = () => {
         console.log("google sign in failed, try again")
     };
 
+
+    // NOTES
+    // the handleChange prop refers to the onChange function written in the Input component which specifies a handleChange prop for the onChange event.
     return (
         <Container component="main" maxWidth="xs" >
             <Paper className={classes.paper} elevation={3}>
@@ -62,13 +76,13 @@ const Auth = () => {
                             {
                                 isSignUp && (
                                     <>
-                                    <Input name='firstName' variant='outlined' label="First Name" handleChange={handleChange} autoFocus half/> 
-                                    <Input name='lastname' variant='outlined' label='Last Name' handleChange={handleChange} half/>
+                                    <Input name='firstName' variant='outlined' label="First Name" handleChange={handleChange} autoFocus half/>
+                                    <Input name='lastName' variant='outlined' label='Last Name' handleChange={handleChange} half/>
                                     </>
                                 )
                             }
                             <Input name="email" label="Email Address" type="email" handleChange={handleChange}   />
-                            <Input name="password" labe="Password"  type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} handleChange={handleChange} /> 
+                            <Input name="password" label="Password"  type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword} handleChange={handleChange} /> 
                             { isSignUp && (
                                 <>
                                 <Input name='confirmPassword' label='Repeat password'  type='password' handleChange={handleChange} />

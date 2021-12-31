@@ -17,15 +17,15 @@ const Form = ({currentId, setCurrentId}) => {
     const [postData,setPostData] = useState({
         creator:"",title:"",message:"",selectedFile:"",tags:""})
         
-        const classes = useStyles()
-        const dispatch = useDispatch()
+    const classes = useStyles()
+    const dispatch = useDispatch()
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
         if(currentId){
-            dispatch(updatePost(currentId, postData))
+            dispatch(updatePost(currentId, postData)) //the current Id and the postData is sent out to the actions where it would call the API with the data attached and dispatch the reducer which would then return the new updated post.
         } else {
             dispatch(createPost(postData))
         }
