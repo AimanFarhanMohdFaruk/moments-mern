@@ -7,7 +7,7 @@ export const getPosts = async (req,res) => {
 
         res.status(200).json(postMessages)
     } catch (error) {
-        res.status(404).json( {message: error.message})
+        res.status(404).json( {message: error.message} )
     }
 };
 
@@ -34,7 +34,7 @@ export const updatePost = async (req,res) => {
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No with that id");
     
-    const updatedPost  = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, { new: true });
+    const updatedPost  = await PostMessage.findByIdAndUpdate(_id, {...post, _id}, { new: true }); //find PostMesage with _id, spread(copy) new post data, {new:true} -> true to return modified document rather than the original. the default is false.
 
     res.json(updatedPost);
 }
@@ -53,11 +53,25 @@ export const deletePost = async (req,res) => {
 export const likePost = async(req,res) => {
     const {id: _id} = req.params;
 
+    if(!req.userId) return res.json({message:"Unauthenticated"})
+
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No with that id");
 
     const post = await PostMessage.findById(_id)
-    const updatedPost = await PostMessage.findByIdAndUpdate(_id, {likeCount: post.likeCount + 1}, {new:true})
+    
+    const index = post.likes.findIndex((id) => id === String(req.userId))
+s
+    if(index === - 1){
 
+        //like
 
-    res.json(updatedPost)
-}
+        post.likes.push(req.userId)
+
+    } else {
+
+        //delete
+
+        post.likes = post.likes.filter((id) => id !== String(req.userId))
+
+    }
+};

@@ -10,3 +10,5 @@ const userSchema = mongoose.Schema({
 const User = mongoose.model("User", userSchema)
 
 export default User;
+
+// by default, Mongoose adds an _id property to all schemas. 
