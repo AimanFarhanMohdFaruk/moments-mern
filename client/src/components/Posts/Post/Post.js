@@ -9,11 +9,10 @@ import {useDispatch } from 'react-redux'
 import { deletePost, likePost } from '../../../actions/posts';
 
 
-const Post = ( {post, setCurrentId} ) => {
+const Post = ( { post, setCurrentId } ) => {
 
     const classes = useStyles()
     const dispatch = useDispatch()
-
 
     return (
         <>
@@ -21,7 +20,7 @@ const Post = ( {post, setCurrentId} ) => {
             <CardMedia  className={classes.media} image={post.selectedFile} title={post.title} />
             
             <div className={classes.overlay}>
-                <Typography variant="h6" >{post.creator}</Typography>
+                <Typography variant="h6" >{post.name}</Typography>
                 <Typography variant="body2" >{moment(post.createdAt).fromNow()}</Typography>
             </div>
            
@@ -35,7 +34,7 @@ const Post = ( {post, setCurrentId} ) => {
             </div>
             
             <div className={classes.details} >
-                <Typography variant="body2" color="textSecondary">{post.tags.map((tag)=>`#${tag}`)}</Typography>
+                <Typography variant="body2" color="textSecondary">{post.tags.map((tag) => `#${tag} `)}</Typography>
             </div>
             
                 <Typography className={classes.title} variant="h5" gutterBottom >{post.title}</Typography>

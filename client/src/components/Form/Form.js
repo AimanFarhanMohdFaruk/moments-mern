@@ -9,35 +9,33 @@ import { createPost, updatePost } from "../../actions/posts"
 const Form = ({currentId, setCurrentId}) => {
 
     const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
+    const classes = useStyles()
+    const dispatch = useDispatch()
+    const [postData,setPostData] = useState({
+        title:"",message:"",selectedFile:"",tags:""})
+    const user = JSON.parse(localStorage.getItem("profile"))
 
     useEffect(()=>{
         if(post) setPostData(post);
     },[post]) // function to populate form in case the post data is available
 
-    const [postData,setPostData] = useState({
-        creator:"",title:"",message:"",selectedFile:"",tags:""})
-        
-    const classes = useStyles()
-    const dispatch = useDispatch()
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-
-        if(currentId){
-            dispatch(updatePost(currentId, postData)) //the current Id and the postData is sent out to the actions where it would call the API with the data attached and dispatch the reducer which would then return the new updated post.
-        } else {
-            dispatch(createPost(postData))
-        }
-        clear()
-    }
-
-    const clear = (e) => {
-        e.preventDefault()
-        setCurrentId(null)
+    const clear = () => {
+        setCurrentId(0)
         setPostData({
-            creator:"",title:"",message:"",selectedFile:"",tags:""})
+            title:"",message:"",selectedFile:"",tags:""})
     }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if(currentId === 0){
+            dispatch(createPost({...postData, name: user?.result?.name }))
+            clear(); //the current Id and the postData is sent out to the actions where it would call the API with the data attached and dispatch the reducer which would then return the new updated post.
+        } else {
+            dispatch(updatePost(currentId, {...postData, name: user?.result?.name }))
+            clear();
+        }
+    };
 
     return (
         <>
@@ -46,14 +44,6 @@ const Form = ({currentId, setCurrentId}) => {
                 <Typography variant="h6">
                     {currentId ? 'Editing' : 'Creating'} a moment
                 </Typography>
-                <TextField 
-                name="creator" 
-                variant="outlined" 
-                label="Creator" 
-                fullWidth
-                value={postData.creator}
-                onChange={ (e) => setPostData({...postData,creator: e.target.value})}
-                />
                 <TextField 
                 name="title" 
                 variant="outlined" 
@@ -76,7 +66,7 @@ const Form = ({currentId, setCurrentId}) => {
                 label="Tags" 
                 fullWidth
                 value={postData.tags} 
-                onChange={(e) => setPostData({...postData,tags: e.target.value.split(",")})}
+                onChange={(e) => setPostData({...postData, tags: e.target.value.split(",") })}
                 />
                 <div className={classes.fileInput} >
                     <FileBase

@@ -3,7 +3,7 @@ import { Avatar, Paper, Typography, Button, Grid, Container, TextField } from "@
 import { GoogleLogin } from 'react-google-login'
 import {useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
-import { signIn, signUp } from "../../actions/auth.js"
+import { signIn, signUp } from "../../actions/auth"
 
 import useStyles from "./styles"
 import LockOutlined from '@material-ui/icons/LockOutlined';
@@ -27,10 +27,11 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
         if (isSignUp) {
-            dispatch(signUp, (formData, navigate))
+            dispatch(signUp(formData, navigate))
         } else {
-            dispatch(signIn, (formData, navigate))
+            dispatch(signIn(formData, navigate))
         }
     };
 

@@ -49,14 +49,14 @@ export const signUp = async (req,res) => {
 
         const encryptPassword = await bcrypt.hash(password, 12);
 
-        const newUser = await User.create({
+        const user = await User.create({
             name: `${firstName} ${lastName}`, email, password: encryptPassword,
         });
 
         const token = jwt.sign(
-            {id : newUser._id, email: newUser.email}, process.env.TOKEN_KEY, {expiresIn: "1h"});
+            {id : user._id, email: user.email}, process.env.TOKEN_KEY, {expiresIn: "1h"});
 
-        res.status(200).json({ newUser, token })
+        res.status(200).json({ result: user, token })
 
     } catch (error) {
         res.status(500).json( {message: error.message})

@@ -1,4 +1,4 @@
-import jwt, {decode} from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 const authenticate = async (req, res, next) => { //next, do something then move to the next thing
 
@@ -6,7 +6,7 @@ const authenticate = async (req, res, next) => { //next, do something then move 
 
         const token = req.headers.authorization.split(" ")[1];
 
-        if ( token == null ) return res.status(401).json({message: "Missing token"})
+        if ( token == null ) return res.status(401).json({message: "Missing token"});
 
         const isCustomAuth = token.length < 500; //check if the token is from our local token or googleAuth, if more than 500 means it is from google.
 
