@@ -6,7 +6,7 @@ import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes"
 
 export const getPosts = () => async (dispatch) => {
     try {
-        const { data } = await api.fetchPosts();
+        const { data } = await api.fetchPosts(); //await data from server then return through the FETCH_ALL action.payload
 
         dispatch({
             type: FETCH_ALL,
@@ -20,8 +20,7 @@ export const getPosts = () => async (dispatch) => {
 export const createPost = (post) => async (dispatch) => {
     try {
         const { data } = await api.createPost(post)
-
-        dispatch ( {type: CREATE, payload: data})
+        dispatch ({ type: CREATE, payload: data })
 
     } catch (error) {
         console.log(error)

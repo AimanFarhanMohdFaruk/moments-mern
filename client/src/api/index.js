@@ -6,9 +6,8 @@ const API = axios.create({baseURL: "http://localhost:5000"})
 // authroisation header
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')){
-        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`; //populate the req with a authorization header.
     }
-
 
     return req;
 });

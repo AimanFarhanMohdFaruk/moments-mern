@@ -8,11 +8,13 @@ import { createPost, updatePost } from "../../actions/posts"
 
 const Form = ({currentId, setCurrentId}) => {
 
-    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
     const classes = useStyles()
     const dispatch = useDispatch()
-    const [postData,setPostData] = useState({
-        title:"",message:"",selectedFile:"",tags:""})
+
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
+
+    const [postData,setPostData] = useState({ title:"",message:"",selectedFile:"",tags:"" })
+
     const user = JSON.parse(localStorage.getItem("profile"))
 
     useEffect(()=>{
