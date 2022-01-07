@@ -1,11 +1,11 @@
 import React from 'react';
 import useStyles from './styles'
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@material-ui/core"
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, CircularProgress } from "@material-ui/core"
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt"
 import DeleteIcon from "@material-ui/icons/Delete"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import moment from "moment"
-import {useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { deletePost, likePost } from '../../../actions/posts';
 
 
@@ -34,7 +34,9 @@ const Post = ( { post, setCurrentId } ) => {
             </div>
             
             <div className={classes.details} >
-                <Typography variant="body2" color="textSecondary"> {post.tags.map((tag) => `#${tag} `)} </Typography>
+
+                {!post.tags ? <CircularProgress/> : <Typography variant="body2" color="textSecondary"> {post.tags.map((tag) => `#${tag} `)} </Typography>}
+                
             </div>
             
                 <Typography className={classes.title} variant="h5" gutterBottom >{post.title}</Typography>
