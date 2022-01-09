@@ -18,6 +18,8 @@ const Auth = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+
+
     const [ isSignUp , setIsSignUp ] = useState(true)
     const [ showPassword, setShowPassword] = useState(false)
 
@@ -61,7 +63,6 @@ const Auth = () => {
     const googleFailure = () => {
         console.log("google sign in failed, try again")
     };
-
 
     // NOTES
     // the handleChange prop refers to the onChange function written in the Input component which specifies a handleChange prop for the onChange event.

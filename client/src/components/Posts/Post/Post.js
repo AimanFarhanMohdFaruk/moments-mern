@@ -16,7 +16,7 @@ const Post = ( { post, setCurrentId } ) => {
 
     return (
         <>
-        <Card className={classes.card}>
+        <Card className={classes.card} key={post._id} >
             <CardMedia  className={classes.media} image={post.selectedFile} title={post.title} component='image' />
             
             <div className={classes.overlay}>
@@ -37,7 +37,7 @@ const Post = ( { post, setCurrentId } ) => {
 
                 {!post.tags ? <CircularProgress/> : <Typography variant="body2" color="textSecondary"> {post.tags.map((tag) => `#${tag} `)} </Typography>}
                 
-            </div>
+            </div>  
             
                 <Typography className={classes.title} variant="h5" gutterBottom >{post.title}</Typography>
 
@@ -53,7 +53,7 @@ const Post = ( { post, setCurrentId } ) => {
                 onClick={()=> dispatch(likePost(post._id))} >
 
                     <ThumbUpAltIcon fontSize="small"/>
-                   &nbsp; Like &nbsp;  {post.likeCount}
+                   &nbsp; Like &nbsp;  {post.likes.length}
                   
 
                 </Button>

@@ -4,7 +4,7 @@ import FileBase from 'react-file-base64'
 import { TextField, Paper, Typography, Button } from "@material-ui/core"
 import useStyles from './styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { createPost, updatePost } from "../../actions/posts"
+import { createPost, updatePost, getPosts } from "../../actions/posts"
 
 const Form = ({currentId, setCurrentId}) => {
 
@@ -38,6 +38,16 @@ const Form = ({currentId, setCurrentId}) => {
             clear();
         }
     };
+
+    if(!user?.result?.name){
+        return (
+            <Paper  className={classes.paper}>
+                <Typography variant="h6" align="center" >
+                    Please sign in to create and like other moments!
+                </Typography>
+            </Paper>
+        )
+    }
 
     return (
         <>
